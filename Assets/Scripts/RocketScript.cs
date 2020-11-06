@@ -40,6 +40,9 @@ public class RocketScript : MonoBehaviour
             return;
         gameObject.SetActive(false);
         _rb.velocity = Vector2.zero;
-        Destroy(other.gameObject);
+        //other.gameObject.SetActive(false);
+        var ec = other.gameObject.GetComponent<EnemyController>();
+        if (ec.IsAlive())
+            ec.Die();
     }
 }

@@ -7,15 +7,17 @@ public class EnemySpawner : MonoBehaviour
     public Transform spawnPos;
     public float timeBetweenSpawns;
     public short maxEnemyCount;
-    public Transform enemyPrefab;
+    public GameObject enemyPrefab;
     public Transform target;
     private Vector3 _diff;
     private float _lastSpawn;
     private readonly Random _random = new Random();
+    private ObjectPool _pool;
     private void Start()
     {
         _diff = spawnPos.position - transform.position;
         enemyPrefab.GetComponent<EnemyController>().target = target;
+        _pool = new ObjectPool(enemyPrefab.gameObject, 10);
     }
 
     private void FixedUpdate()
@@ -26,7 +28,15 @@ public class EnemySpawner : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 var pos = transform.position + _diff;
-                Instantiate(enemyPrefab).position = new Vector3(pos.x, spawnPos.position.y, pos.z);
+                var enemy = _pool.GetObject();
+                enemy.transform.position = new Vector3(pos.x, spawnPos.position.y, pos.z);
+                var rb = enemy.GetComponent<Rigidbody2D>();
+                rb.mass = 1f;
+                rb.gravityScale = 1f;
+                rb.rotation = 0f;
+                rb.freezeRotation = true;
+                enemy.SetActive(true);
+                rb.rotation = 0f;
             }
 
             _lastSpawn = Time.fixedTime;

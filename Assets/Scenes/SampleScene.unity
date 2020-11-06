@@ -804,7 +804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f400b7976b98bc18866f672d33d506a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5991448782009560204, guid: 7debf3c35b28387fdbec1c1c9942afae, type: 3}
+  prefab: {fileID: 6006275050469676560, guid: 7debf3c35b28387fdbec1c1c9942afae, type: 3}
   firePoint: {fileID: 1043406434}
 --- !u!114 &2053847427
 MonoBehaviour:
@@ -819,8 +819,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPos: {fileID: 1692511764}
-  timeBetweenSpawns: 5
+  timeBetweenSpawns: 2
   maxEnemyCount: 3
-  enemyPrefab: {fileID: 7250562544566202698, guid: ef6e23d6fe1e28e8c809679081854c6a,
+  enemyPrefab: {fileID: 7250562544566202694, guid: ef6e23d6fe1e28e8c809679081854c6a,
     type: 3}
   target: {fileID: 2053847422}
