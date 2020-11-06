@@ -29,6 +29,9 @@ public class OwnCharacterController : MonoBehaviour
             scale.x *= -1;
             tr.localScale = scale;
         }
+
+        if (Input.GetButton("Fire3"))
+            input *= 10;
         rb.AddForce(new Vector2(input * 5, 0));
 
         if (Input.GetButtonDown("Jump") && IsOnGround())
