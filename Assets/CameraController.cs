@@ -14,8 +14,9 @@ public class CameraController : MonoBehaviour {
 
     //  Center position of the target relative to the camera.
     public Vector3 offset;
-    private float _lastSwitch = -1;
-    private bool _facingRight;
+
+    private float _goingSince;
+    private bool _goingRight;
 
     //  Store initial values
     void Start()
@@ -28,27 +29,33 @@ public class CameraController : MonoBehaviour {
     void FixedUpdate()
     {
         if (!target) return;
+        float horiz = Input.GetAxis("Horizontal");
+        if (_goingSince == 0 && Mathf.Abs(horiz) > 0.1f)
+        {
+            _goingRight = horiz > 0;
+            _goingSince = Time.time;
+        }
+
+        if (Mathf.Abs(horiz) < 0.01f)
+            _goingSince = 0;
+
         //  Get where the camera should be, and what movement is required.
-        var position = _tr.position;
-        bool facingLeft = target.localScale.x < 0;
-        Vector3 anchorPos = position + (facingLeft ? new Vector3(-offset.x, offset.y, offset.z) : offset);
-        Vector3 movement = target.position - anchorPos;
+        var ownPos = _tr.position;
+        Vector3 anchorPosL = ownPos + offset;
+        Vector3 anchorPosR = ownPos + new Vector3(-offset.x, offset.y, offset.z);
+        var targetPos = target.position;
+        Vector3 movementL = targetPos - anchorPosL;
+        Vector3 movementR = targetPos - anchorPosR;
+        if (movementL.x > 0 && movementR.x < 0
+                            && _goingSince == 0)
+            return;
+        var movement = (_goingSince != 0 ? _goingRight : movementL.x < movementR.x)
+            ? movementL //Ha már egy ideje megyünk egy irányba vagy ha arra közelebb van a kamerának, akkor arra megy
+            : movementR;
 
-        float sp = speed;
-        /*if (_lastSwitch >= 0 && Time.time - _lastSwitch < 0.5f)
-            sp /= 4;*/
-        float diff = Time.time - _lastSwitch;
-        if (_lastSwitch >= 0 && diff < 2f)
-            sp *= 0.5f + diff / 4;
-
-        if (facingLeft == _facingRight) //Megváltozott az irány
-            _lastSwitch = Time.time;
-
-        _facingRight = !facingLeft;
-        
         //  Update position based on movement and speed.
-        Vector3 newCamPos = position + movement * sp;
-        position = newCamPos;
-        _tr.position = position;
+        Vector3 newCamPos = ownPos + movement * speed;
+        ownPos = newCamPos;
+        _tr.position = ownPos;
     }
 }
