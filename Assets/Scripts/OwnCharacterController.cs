@@ -31,17 +31,14 @@ public class OwnCharacterController : MonoBehaviour
         }
         rb.AddForce(new Vector2(input * 5, 0));
 
-        var cols = new Collider2D[5];
-        /*if (Input.GetButtonDown("Jump") && rb.OverlapCollider(new ContactFilter2D(), cols) > 0
-                                        && cols.Any(col => col.CompareTag("Tiled")))*/
         if (Input.GetButtonDown("Jump") && IsOnGround())
-            rb.AddForce(new Vector2(0, 3), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0, 4), ForceMode2D.Impulse);
     }
 
     private bool IsOnGround()
     {
-        var bounds = collider.bounds;
-        return Physics.CheckCapsule(bounds.center, new Vector3(bounds.center.x, bounds.min.y - 0.1f, bounds.center.z),
-            0.28f);
+        var res = new List<Collider2D>();
+        rb.OverlapCollider(new ContactFilter2D(), res);
+        return res.Any(col => col.CompareTag("Ground"));
     }
 }
