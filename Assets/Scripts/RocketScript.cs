@@ -33,4 +33,13 @@ public class RocketScript : MonoBehaviour
 
         _rb.AddForce(new Vector2(_goingRight ? 10 : -10, 0));
     }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (!other.gameObject.CompareTag("Enemy"))
+            return;
+        gameObject.SetActive(false);
+        _rb.velocity = Vector2.zero;
+        Destroy(other.gameObject);
+    }
 }

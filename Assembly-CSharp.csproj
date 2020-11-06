@@ -56,7 +56,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\EnemyController.cs" />
      <Compile Include="Assets\Scripts\OwnCharacterController.cs" />
+     <Compile Include="Assets\Scripts\Parallaxing.cs" />
      <Compile Include="Assets\Scripts\RocketScript.cs" />
      <Compile Include="Assets\Scripts\Tiling.cs" />
      <Compile Include="Assets\Scripts\WeaponFireController.cs" />
