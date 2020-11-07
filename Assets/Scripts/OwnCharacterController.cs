@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = System.Random;
 
 public class OwnCharacterController : MonoBehaviour
 {
     private Rigidbody2D _rb;
     private Vector3 _spawnPos;
+    private float _health = 100f;
+    private Random _random = new Random();
 
     // Start is called before the first frame update
     void Start()
@@ -41,12 +44,15 @@ public class OwnCharacterController : MonoBehaviour
 
     public void Hit()
     {
-        Respawn();
+        _health -= (float) _random.NextDouble() % 20f + 20f;
+        if (_health <= 0f)
+            Respawn();
     }
 
     private void Respawn()
     {
         transform.position = _spawnPos;
+        _health = 100f;
     }
 
     private bool IsOnGround()

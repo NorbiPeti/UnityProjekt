@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
+using Random = System.Random;
 
 public class Tiling : MonoBehaviour
 {
-
-    private const int LEFT = -1;
+	private const int LEFT = -1;
 	private const int RIGHT = 1;
 
 	public int offsetX = 2;			// the offset so that we don't get any weird errors
@@ -12,16 +12,21 @@ public class Tiling : MonoBehaviour
 	public bool hasARightBuddy;
 	public bool hasALeftBuddy;
 
+	public Sprite[] randomSprites;
+
     public bool reverseScale;	// used if the object is not tilable
 
 	private float spriteWidth;		// the width of our element
 	private Camera cam;
 	private Transform myTransform;
+	private Random _random;
 
     void Awake () {
 		cam = Camera.main;
 		myTransform = transform;
-	}
+		if (randomSprites.Length > 0)
+			_random = new Random();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +70,9 @@ public class Tiling : MonoBehaviour
                                            position.y, position.z);
         // instantating our new body and storing him in a variable
 		Transform newBuddy = Instantiate (myTransform, newPosition, myTransform.rotation);
+
+		if (randomSprites.Length > 0) //Randomizált háttér
+			newBuddy.GetComponent<SpriteRenderer>().sprite = randomSprites[_random.Next(randomSprites.Length)];
 
 		// if not tilable let's reverse the x size og our object to get rid of ugly seams
 		if (reverseScale)
