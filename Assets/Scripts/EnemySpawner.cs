@@ -30,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
                 var pos = transform.position + _diff;
                 var enemy = _pool.GetObject(true);
                 if (enemy is null) break;
-                enemy.transform.position = new Vector3(pos.x, spawnPos.position.y, pos.z);
+                enemy.transform.position = pos;
                 var rb = enemy.GetComponent<Rigidbody2D>();
                 rb.mass = 1f;
                 rb.gravityScale = 1f;

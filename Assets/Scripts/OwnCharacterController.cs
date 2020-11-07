@@ -15,6 +15,8 @@ public class OwnCharacterController : MonoBehaviour
     private Vector3 _spawnPos;
     private float _health = 100f;
     private Random _random = new Random();
+    private List<Vector3> _checkpointPosList = new List<Vector3>();
+    private Vector3 _checkpointPos;
 
     // Start is called before the first frame update
     void Start()
@@ -29,10 +31,10 @@ public class OwnCharacterController : MonoBehaviour
         if (Mathf.Abs(_rb.velocity.x) > 3)
             return;
         float input = Input.GetAxis("Horizontal");
-        if (input < 0 && _rb.transform.localScale.x > 0
-            || input > 0 && _rb.transform.localScale.x < 0)
+        var tr = transform;
+        if (input < 0 && tr.localScale.x > 0
+            || input > 0 && tr.localScale.x < 0)
         {
-            var tr = transform;
             var scale = tr.localScale;
             scale.x *= -1;
             tr.localScale = scale;
@@ -44,6 +46,13 @@ public class OwnCharacterController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && IsOnGround())
             _rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+
+        if (_checkpointPos.x > 0 && (tr.position - _checkpointPos).magnitude < 2f)
+        {
+            _spawnPos = _checkpointPos;
+            _checkpointPosList.RemoveAt(0);
+            _checkpointPos = _checkpointPosList.Count > 0 ? _checkpointPosList[0] : Vector3.zero;
+        }
     }
 
     public void Hit()
@@ -53,24 +62,22 @@ public class OwnCharacterController : MonoBehaviour
             Respawn();
     }
 
-    private void Respawn()
+    public void Respawn()
     {
         transform.position = _spawnPos;
         _health = 100f;
     }
 
-    private bool IsOnGround()
+    public bool IsOnGround(string groundName = "")
     {
         var res = new List<Collider2D>();
         _rb.OverlapCollider(new ContactFilter2D(), res);
-        return res.Any(col => col.CompareTag("Ground"));
+        return res.Any(col => col.CompareTag("Ground") && (groundName.Length == 0 || col.name.StartsWith(groundName)));
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void SetCheckpoint(Vector3 pos)
     {
-        var tr = other.transform;
-        if(!tr.CompareTag("Checkpoint"))
-            return;
-        _spawnPos = tr.position;
+        _checkpointPosList.Add(pos);
+        if (_checkpointPos.x <= 0) _checkpointPos = _checkpointPosList[0];
     }
 }

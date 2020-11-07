@@ -32,15 +32,15 @@ public class EnemyController : MonoBehaviour
         var diff = target.position - tr.position;
         if (_rb.mass < 0.01f)
         { //Már lelőttük
-            if (diff.magnitude > 10)
-            { //Ha már túl messze van
-                _rb.velocity = Vector2.zero;
-                gameObject.SetActive(false);
-            }
+            if (diff.magnitude > 10) //Ha már túl messze van
+                Remove();
 
             _rb.AddForce(new Vector2(0f, flyForce * _rb.mass * _rb.gravityScale)); //Ne maradjon véletlenül útban
             return;
         }
+
+        if (diff.y > 5)
+            Remove();
 
         diff.Normalize();
         float sp = ((float) _random.NextDouble() / 2f + 1f) * speed; //1 és 1.5 közötti szorzó
@@ -66,10 +66,7 @@ public class EnemyController : MonoBehaviour
     {
         _hitsToRemove--;
         if (_hitsToRemove == 0)
-        {
-            _rb.velocity = Vector2.zero;
-            gameObject.SetActive(false);
-        }
+            Remove();
     }
 
     public void Hit()
@@ -83,9 +80,15 @@ public class EnemyController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         var go = other.gameObject;
-        if(!go.CompareTag("Player"))
+        if (!go.CompareTag("Player"))
             return;
         if (IsAlive())
             go.GetComponent<OwnCharacterController>().Hit();
+    }
+
+    private void Remove()
+    {
+        _rb.velocity = Vector2.zero;
+        gameObject.SetActive(false);
     }
 }

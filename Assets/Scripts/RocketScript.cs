@@ -40,13 +40,13 @@ public class RocketScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (!other.gameObject.CompareTag("Enemy"))
-            return;
         if (_hitCount >= maxHits)
             gameObject.SetActive(false);
         _rb.velocity = Vector2.zero;
+        _hitCount++;
+        if (!other.gameObject.CompareTag("Enemy"))
+            return;
         var ec = other.gameObject.GetComponent<EnemyController>();
         ec.Hit();
-        _hitCount++;
     }
 }
