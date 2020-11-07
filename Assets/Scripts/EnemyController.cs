@@ -1,18 +1,28 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class EnemyController : MonoBehaviour
 {
     public Transform target;
     public float speed;
     public float flyForce;
+    public short finalHealth = 3;
     private Rigidbody2D _rb;
+    private short _hitsToRemove;
+    private Random _random = new Random();
     
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void OnEnable()
+    {
+        _hitsToRemove = finalHealth;
     }
 
     // Update is called once per frame
@@ -33,7 +43,8 @@ public class EnemyController : MonoBehaviour
         }
 
         diff.Normalize();
-        _rb.AddForce(diff * (speed * _rb.mass * _rb.gravityScale));
+        float sp = ((float) _random.NextDouble() / 2f + 1f) * speed; //1 és 1.5 közötti szorzó
+        _rb.AddForce(diff * (sp * _rb.mass * _rb.gravityScale));
         if (diff.x * transform.localScale.x < 0) //Ha másfelé néz, mint amerre megy
         {
             var scale = tr.localScale;
@@ -42,7 +53,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void Die()
+    private void Die()
     {
         _rb.mass = 0.00001f;
         _rb.gravityScale = 0.01f;
@@ -50,4 +61,22 @@ public class EnemyController : MonoBehaviour
     }
 
     public bool IsAlive() => _rb.mass > 0.001f;
+
+    private void HitWhileFlying()
+    {
+        _hitsToRemove--;
+        if (_hitsToRemove == 0)
+        {
+            _rb.velocity = Vector2.zero;
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void Hit()
+    {
+        if (IsAlive())
+            Die();
+        else
+            HitWhileFlying();
+    }
 }

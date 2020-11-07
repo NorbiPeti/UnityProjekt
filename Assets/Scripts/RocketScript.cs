@@ -8,6 +8,9 @@ public class RocketScript : MonoBehaviour
     private float _fired;
     private Rigidbody2D _rb;
     private bool _goingRight;
+    private byte _hitCount;
+
+    public byte maxHits = 3;
     
     // Start is called before the first frame update
     void Start()
@@ -19,6 +22,7 @@ public class RocketScript : MonoBehaviour
     {
         _fired = Time.fixedTime;
         _goingRight = transform.localScale.x > 0;
+        _hitCount = 0;
     }
 
     // Update is called once per frame
@@ -38,11 +42,11 @@ public class RocketScript : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Enemy"))
             return;
-        gameObject.SetActive(false);
+        if (_hitCount >= maxHits)
+            gameObject.SetActive(false);
         _rb.velocity = Vector2.zero;
-        //other.gameObject.SetActive(false);
         var ec = other.gameObject.GetComponent<EnemyController>();
-        if (ec.IsAlive())
-            ec.Die();
+        ec.Hit();
+        _hitCount++;
     }
 }

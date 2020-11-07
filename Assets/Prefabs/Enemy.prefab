@@ -146,3 +146,4 @@ MonoBehaviour:
   target: {fileID: 0}
   speed: 6.5
   flyForce: 30
+  finalHealth: 3

@@ -18,9 +18,10 @@ public class ObjectPool
     /// Visszaad egy új objektumot. Aktiválandó, használat után pedig deaktiválandó.
     /// </summary>
     /// <returns>Egy objektum a poolból.</returns>
-    public GameObject GetObject()
+    public GameObject GetObject(short maxCount = 0)
     {
         GameObject theRocket = null;
+        int c = 0;
         foreach (var rocket in _objects)
         {
             if (!rocket.activeSelf)
@@ -28,6 +29,10 @@ public class ObjectPool
                 theRocket = rocket;
                 break;
             }
+
+            c++;
+            if (c == maxCount)
+                return null;
         }
 
         if (theRocket is null)
