@@ -10,6 +10,7 @@ public class PlatformSpawner : MonoBehaviour
     public Transform platformRight;
     public Transform player;
     public int maxSize = 5;
+    public int maxLevel = 5;
 
     private Vector3 _spawnDiff;
     private int _level = 0;
@@ -42,11 +43,19 @@ public class PlatformSpawner : MonoBehaviour
         _lastPlatformPos = pos;
         if (_level == 0)
             _lastLevel0Pos = pos.x;
-        if (_random.Next(2) == 1)
+        int rand = _random.Next(10);
+        if (rand == 1 && _level < maxLevel)
         {
             _level++;
             _lastPlatformPos.y++;
             _playerController.SetCheckpoint(_lastPlatformPos);
+        }
+        else if (rand == 2 && _level > 1)
+        {
+            _level--;
+            _lastPlatformPos.y++;
+            _playerController.SetCheckpoint(_lastPlatformPos);
+            _lastPlatformPos.y -= 2;
         }
     }
 }

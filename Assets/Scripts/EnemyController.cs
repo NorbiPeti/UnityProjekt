@@ -39,7 +39,7 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        if (diff.y > 5)
+        if (diff.y > 5 || diff.x > 20)
             Remove();
 
         diff.Normalize();

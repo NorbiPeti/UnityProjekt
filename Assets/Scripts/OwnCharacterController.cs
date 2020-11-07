@@ -66,6 +66,7 @@ public class OwnCharacterController : MonoBehaviour
     {
         transform.position = _spawnPos;
         _health = 100f;
+        _rb.velocity = Vector2.zero;
     }
 
     public bool IsOnGround(string groundName = "")
