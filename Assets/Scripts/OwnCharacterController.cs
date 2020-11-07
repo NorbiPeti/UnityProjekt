@@ -61,4 +61,12 @@ public class OwnCharacterController : MonoBehaviour
         _rb.OverlapCollider(new ContactFilter2D(), res);
         return res.Any(col => col.CompareTag("Ground"));
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        var tr = other.transform;
+        if(!tr.CompareTag("Checkpoint"))
+            return;
+        _spawnPos = tr.position;
+    }
 }
