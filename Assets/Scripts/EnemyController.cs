@@ -79,4 +79,13 @@ public class EnemyController : MonoBehaviour
         else
             HitWhileFlying();
     }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        var go = other.gameObject;
+        if(!go.CompareTag("Player"))
+            return;
+        if (IsAlive())
+            go.GetComponent<OwnCharacterController>().Hit();
+    }
 }

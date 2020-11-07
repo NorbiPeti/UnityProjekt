@@ -18,10 +18,9 @@ public class ObjectPool
     /// Visszaad egy új objektumot. Aktiválandó, használat után pedig deaktiválandó.
     /// </summary>
     /// <returns>Egy objektum a poolból.</returns>
-    public GameObject GetObject(short maxCount = 0)
+    public GameObject GetObject(bool fixedPool = false)
     {
         GameObject theRocket = null;
-        int c = 0;
         foreach (var rocket in _objects)
         {
             if (!rocket.activeSelf)
@@ -29,14 +28,13 @@ public class ObjectPool
                 theRocket = rocket;
                 break;
             }
-
-            c++;
-            if (c == maxCount)
-                return null;
         }
 
         if (theRocket is null)
-            _objects.Add(theRocket = Object.Instantiate(_prefab));
+            if (fixedPool)
+                return null;
+            else
+                _objects.Add(theRocket = Object.Instantiate(_prefab));
         return theRocket;
     }
 }

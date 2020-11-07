@@ -28,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 var pos = transform.position + _diff;
-                var enemy = _pool.GetObject();
+                var enemy = _pool.GetObject(true);
                 if (enemy is null) break;
                 enemy.transform.position = new Vector3(pos.x, spawnPos.position.y, pos.z);
                 var rb = enemy.GetComponent<Rigidbody2D>();

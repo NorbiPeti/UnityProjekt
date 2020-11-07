@@ -634,6 +634,9 @@
  <Reference Include="Unity.Rider.Editor">
  <HintPath>/D/Unity/Projects/Projekt/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Mathematics">
+ <HintPath>/D/Unity/Projects/Projekt/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.2D.Psdimporter.Editor">
  <HintPath>/D/Unity/Projects/Projekt/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
  </Reference>
@@ -658,6 +661,9 @@
  <Reference Include="Unity.2D.Animation.Editor">
  <HintPath>/D/Unity/Projects/Projekt/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Mathematics.Editor">
+ <HintPath>/D/Unity/Projects/Projekt/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.2D.Common.Editor">
  <HintPath>/D/Unity/Projects/Projekt/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
  </Reference>
@@ -666,12 +672,6 @@
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>/D/Unity/Projects/Projekt/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Mathematics">
- <HintPath>/D/Unity/Projects/Projekt/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Mathematics.Editor">
- <HintPath>/D/Unity/Projects/Projekt/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
