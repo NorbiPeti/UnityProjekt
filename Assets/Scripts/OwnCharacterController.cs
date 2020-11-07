@@ -7,6 +7,10 @@ using Random = System.Random;
 
 public class OwnCharacterController : MonoBehaviour
 {
+    public float jumpForce;
+    public float movementSpeed;
+    public float sprintSpeed;
+    
     private Rigidbody2D _rb;
     private Vector3 _spawnPos;
     private float _health = 100f;
@@ -35,11 +39,11 @@ public class OwnCharacterController : MonoBehaviour
         }
 
         if (Input.GetButton("Fire3"))
-            input *= 10;
-        _rb.AddForce(new Vector2(input * 5, 0));
+            input *= sprintSpeed;
+        _rb.AddForce(new Vector2(input * movementSpeed, 0));
 
         if (Input.GetButtonDown("Jump") && IsOnGround())
-            _rb.AddForce(new Vector2(0, 4), ForceMode2D.Impulse);
+            _rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
     }
 
     public void Hit()
