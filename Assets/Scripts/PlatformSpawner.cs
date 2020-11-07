@@ -11,20 +11,24 @@ public class PlatformSpawner : MonoBehaviour
     public Transform player;
     public int maxSize = 5;
     public int maxLevel = 5;
+    public int platformCount = 2;
 
     private Vector3 _spawnDiff;
-    private int _level = 0;
+    private int _level;
     private Random _random = new Random();
     private Vector3 _lastPlatformPos;
     private OwnCharacterController _playerController;
     private float _lastLevel0Pos;
-    
+    private int _totalLevel;
+    private int _remainingPlatforms;
+
     // Start is called before the first frame update
     void Start()
     {
         _spawnDiff = platformLeft.position - player.position;
         _lastPlatformPos = platformRight.position;
         _playerController = player.GetComponent<OwnCharacterController>();
+        _remainingPlatforms = platformCount;
     }
 
     // Update is called once per frame
@@ -43,19 +47,26 @@ public class PlatformSpawner : MonoBehaviour
         _lastPlatformPos = pos;
         if (_level == 0)
             _lastLevel0Pos = pos.x;
-        int rand = _random.Next(10);
-        if (rand == 1 && _level < maxLevel)
+        if (--_remainingPlatforms != 0) return;
+        int rand = _random.Next(2);
+        switch (rand)
         {
-            _level++;
-            _lastPlatformPos.y++;
-            _playerController.SetCheckpoint(_lastPlatformPos);
+            case 0 when _level < maxLevel:
+            case 1 when _level == 0:
+                _level++;
+                _lastPlatformPos.y++;
+                _playerController.SetCheckpoint(_lastPlatformPos);
+                break;
+            case 0 when _level > 1:
+            case 1 when _level == maxLevel:
+                _level--;
+                _lastPlatformPos.y++;
+                _playerController.SetCheckpoint(_lastPlatformPos);
+                _lastPlatformPos.y -= 2;
+                break;
         }
-        else if (rand == 2 && _level > 1)
-        {
-            _level--;
-            _lastPlatformPos.y++;
-            _playerController.SetCheckpoint(_lastPlatformPos);
-            _lastPlatformPos.y -= 2;
-        }
+
+        _totalLevel++;
+        _remainingPlatforms = (1 + _totalLevel) * platformCount;
     }
 }
