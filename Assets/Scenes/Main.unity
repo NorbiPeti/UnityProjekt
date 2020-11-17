@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 407879045}
   - component: {fileID: 407879044}
   - component: {fileID: 407879046}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlatformMid
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -309,7 +309,7 @@ GameObject:
   - component: {fileID: 413955008}
   - component: {fileID: 413955007}
   - component: {fileID: 413955009}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlatformRight
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -405,7 +405,8 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.35, y: 0.35}
+    - - {x: -0.34868273, y: 0.35010514}
+      - {x: -0.34908652, y: 0.34994364}
       - {x: -0.35, y: -0.35}
       - {x: -0.021993905, y: -0.2905682}
       - {x: 0.22573361, y: -0.16113642}
@@ -539,7 +540,7 @@ GameObject:
   - component: {fileID: 887921231}
   - component: {fileID: 887921230}
   - component: {fileID: 887921232}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlatformLeft
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -642,7 +643,7 @@ PolygonCollider2D:
       - {x: -0.15077958, y: -0.21121931}
       - {x: 0.031678874, y: -0.2983211}
       - {x: 0.35, y: -0.35}
-      - {x: 0.35, y: 0.35}
+      - {x: 0.3502799, y: 0.34996805}
 --- !u!1 &996257474
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +757,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothing: 1
+--- !u!1 &1005132794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1005132795}
+  m_Layer: 0
+  m_Name: Foot
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1005132795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005132794}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.061, y: -0.221, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2053847422}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1043406433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,7 +1157,7 @@ GameObject:
   - component: {fileID: 1508769556}
   - component: {fileID: 1508769557}
   - component: {fileID: 1508769558}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1381,6 +1412,7 @@ GameObject:
   - component: {fileID: 2053847423}
   - component: {fileID: 2053847425}
   - component: {fileID: 2053847426}
+  - component: {fileID: 2053847427}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -1451,6 +1483,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1811013770}
+  - {fileID: 1005132795}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1513,9 +1546,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 216ec793de06a4ac7a9767782a179419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foot: {fileID: 1005132795}
+  groundRadius: 0.1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 256
   jumpForce: 5
-  movementSpeed: 5
-  sprintSpeed: 15
+  movementSpeed: 2
+  sprintSpeed: 1.5
   platformSpawner: {fileID: 219260673}
 --- !u!114 &2053847426
 MonoBehaviour:
@@ -1531,3 +1569,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 6006275050469676560, guid: 7debf3c35b28387fdbec1c1c9942afae, type: 3}
   firePoint: {fileID: 1043406434}
+--- !u!95 &2053847427
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053847420}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8a45d79eff56ac9fe9c8c50b3318a6ed, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

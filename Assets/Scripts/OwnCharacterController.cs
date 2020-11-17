@@ -17,12 +17,18 @@ public class OwnCharacterController : CharacterControllerBase
     private readonly Random _random = new Random();
     private readonly List<Vector3> _checkpointPosList = new List<Vector3>();
     private Vector3 _checkpointPos;
+    private Animator _animator;
+    private static readonly int Speed = Animator.StringToHash("Speed");
+    private static readonly int Jump = Animator.StringToHash("Jump");
+    private static readonly int Sprint = Animator.StringToHash("Sprint");
+    private JumpStatus _jumpStatus = JumpStatus.None;
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _spawnPos = transform.position;
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -30,8 +36,6 @@ public class OwnCharacterController : CharacterControllerBase
     {
         if (platformSpawner.ShouldRespawn(transform, this))
             Respawn();
-        if (Mathf.Abs(_rb.velocity.x) > 3)
-            return;
         float input = Input.GetAxis("Horizontal");
         var tr = transform;
         if (input < 0 && tr.localScale.x > 0
@@ -44,10 +48,30 @@ public class OwnCharacterController : CharacterControllerBase
 
         if (Input.GetButton("Fire3"))
             input *= sprintSpeed;
-        _rb.AddForce(new Vector2(input * movementSpeed, 0));
+
+        if (Mathf.Abs(_rb.velocity.x) <= 3)
+            _rb.velocity += new Vector2(input * movementSpeed, 0);
 
         if (Input.GetButtonDown("Jump") && IsOnGround())
-            _rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        {
+            //_rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            _rb.velocity += new Vector2(0, jumpForce);
+            if (Input.GetButton("Fire3")) //Csak akkor animálja az ugrást, ha fut közben
+            {
+                _jumpStatus = JumpStatus.Up;
+                _animator.SetInteger(Jump, (int) _jumpStatus);
+            }
+        }
+        else if (_jumpStatus == JumpStatus.Up && _rb.velocity.y <= 0)
+        {
+            _jumpStatus = JumpStatus.Down;
+            _animator.SetInteger(Jump, (int) _jumpStatus);
+        }
+        else if (_jumpStatus == JumpStatus.Down && Math.Abs(_rb.velocity.y) <= 0.001f)
+        {
+            _jumpStatus = JumpStatus.None;
+            _animator.SetInteger(Jump, (int) _jumpStatus);
+        }
 
         if (_checkpointPos.x > 0 && (tr.position - _checkpointPos).magnitude < 2f)
         {
@@ -55,6 +79,9 @@ public class OwnCharacterController : CharacterControllerBase
             _checkpointPosList.RemoveAt(0);
             _checkpointPos = _checkpointPosList.Count > 0 ? _checkpointPosList[0] : Vector3.zero;
         }
+
+        _animator.SetFloat(Speed, Math.Abs(_rb.velocity.x));
+        _animator.SetBool(Sprint, Input.GetButton("Fire3"));
     }
 
     public void Hit()
@@ -75,5 +102,12 @@ public class OwnCharacterController : CharacterControllerBase
     {
         _checkpointPosList.Add(pos);
         if (_checkpointPos.x <= 0) _checkpointPos = _checkpointPosList[0];
+    }
+
+    enum JumpStatus
+    {
+        None,
+        Up,
+        Down
     }
 }

@@ -5,11 +5,14 @@ using UnityEngine;
 public abstract class CharacterControllerBase : MonoBehaviour
 {
     protected Rigidbody2D _rb;
+
+    public Transform foot;
+    public float groundRadius;
+    public LayerMask groundMask;
     
     public bool IsOnGround(string groundName = "")
     {
-        var res = new List<Collider2D>();
-        _rb.OverlapCollider(new ContactFilter2D(), res);
-        return res.Any(col => col.CompareTag("Ground") && (groundName.Length == 0 || col.name.StartsWith(groundName)));
+        var collider = Physics2D.OverlapCircle(foot.position, groundRadius, groundMask);
+        return collider && (groundName.Length == 0 || collider.name.StartsWith(groundName));
     }
 }
