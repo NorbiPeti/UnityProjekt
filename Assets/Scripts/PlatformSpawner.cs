@@ -14,7 +14,7 @@ public class PlatformSpawner : MonoBehaviour
     public int platformCount = 2;
 
     private Vector3 _spawnDiff;
-    private int _level;
+    internal int Level;
     private Random _random = new Random();
     private Vector3 _lastPlatformPos;
     private OwnCharacterController _playerController;
@@ -34,8 +34,6 @@ public class PlatformSpawner : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (_level > 0 && player.position.x > _lastLevel0Pos && _playerController.IsOnGround("Ground"))
-            _playerController.Respawn();
         if (player.position.x + _spawnDiff.x <= _lastPlatformPos.x)
             return;
         int size = _random.Next(maxSize);
@@ -45,21 +43,21 @@ public class PlatformSpawner : MonoBehaviour
             Instantiate(platformMiddle).position = pos += new Vector3(0.7f, 0, 0);
         Instantiate(platformRight).position = pos += new Vector3(0.7f, 0, 0);
         _lastPlatformPos = pos;
-        if (_level == 0)
+        if (Level == 0)
             _lastLevel0Pos = pos.x;
         if (--_remainingPlatforms != 0) return;
         int rand = _random.Next(2);
         switch (rand)
         {
-            case 0 when _level < maxLevel:
-            case 1 when _level == 0:
-                _level++;
+            case 0 when Level == 0:
+            case 1 when Level < maxLevel:
+                Level++;
                 _lastPlatformPos.y++;
                 _playerController.SetCheckpoint(_lastPlatformPos);
                 break;
-            case 0 when _level > 1:
-            case 1 when _level == maxLevel:
-                _level--;
+            case 0 when Level > 1:
+            case 1 when Level == maxLevel:
+                Level--;
                 _lastPlatformPos.y++;
                 _playerController.SetCheckpoint(_lastPlatformPos);
                 _lastPlatformPos.y -= 2;
@@ -67,6 +65,11 @@ public class PlatformSpawner : MonoBehaviour
         }
 
         _totalLevel++;
-        _remainingPlatforms = (1 + _totalLevel) * platformCount;
+        _remainingPlatforms = _totalLevel * platformCount;
+    }
+
+    public bool ShouldRespawn(Transform tr, CharacterControllerBase controller)
+    {
+        return Level > 0 && tr.position.x > _lastLevel0Pos && controller.IsOnGround("Ground");
     }
 }

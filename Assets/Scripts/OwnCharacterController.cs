@@ -5,17 +5,17 @@ using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
-public class OwnCharacterController : MonoBehaviour
+public class OwnCharacterController : CharacterControllerBase
 {
     public float jumpForce;
     public float movementSpeed;
     public float sprintSpeed;
+    public PlatformSpawner platformSpawner;
     
-    private Rigidbody2D _rb;
     private Vector3 _spawnPos;
     private float _health = 100f;
-    private Random _random = new Random();
-    private List<Vector3> _checkpointPosList = new List<Vector3>();
+    private readonly Random _random = new Random();
+    private readonly List<Vector3> _checkpointPosList = new List<Vector3>();
     private Vector3 _checkpointPos;
 
     // Start is called before the first frame update
@@ -28,6 +28,8 @@ public class OwnCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (platformSpawner.ShouldRespawn(transform, this))
+            Respawn();
         if (Mathf.Abs(_rb.velocity.x) > 3)
             return;
         float input = Input.GetAxis("Horizontal");
@@ -67,13 +69,6 @@ public class OwnCharacterController : MonoBehaviour
         transform.position = _spawnPos;
         _health = 100f;
         _rb.velocity = Vector2.zero;
-    }
-
-    public bool IsOnGround(string groundName = "")
-    {
-        var res = new List<Collider2D>();
-        _rb.OverlapCollider(new ContactFilter2D(), res);
-        return res.Any(col => col.CompareTag("Ground") && (groundName.Length == 0 || col.name.StartsWith(groundName)));
     }
 
     public void SetCheckpoint(Vector3 pos)

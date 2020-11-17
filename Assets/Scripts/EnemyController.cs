@@ -4,20 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : CharacterControllerBase
 {
     public Transform target;
     public float speed;
     public float flyForce;
     public short finalHealth = 3;
-    private Rigidbody2D _rb;
     private short _hitsToRemove;
-    private Random _random = new Random();
+    private readonly Random _random = new Random();
+    private PlatformSpawner _platformSpawner;
     
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _platformSpawner = GameObject.FindGameObjectWithTag("Game manager").GetComponent<PlatformSpawner>();
     }
 
     private void OnEnable()
@@ -29,6 +30,8 @@ public class EnemyController : MonoBehaviour
     void FixedUpdate()
     {
         var tr = transform;
+        if (_platformSpawner.ShouldRespawn(tr, this))
+            Remove();
         var diff = target.position - tr.position;
         if (_rb.mass < 0.01f)
         { //Már lelőttük
