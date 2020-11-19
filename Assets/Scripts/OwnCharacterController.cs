@@ -46,7 +46,8 @@ public class OwnCharacterController : CharacterControllerBase
             tr.localScale = scale;
         }
 
-        if (Input.GetButton("Fire3"))
+        bool sprinting = Input.GetButton("Fire3");
+        if (sprinting)
             input *= sprintSpeed;
 
         if (Mathf.Abs(_rb.velocity.x) <= 3)
@@ -56,7 +57,7 @@ public class OwnCharacterController : CharacterControllerBase
         {
             //_rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             _rb.velocity += new Vector2(0, jumpForce);
-            if (Input.GetButton("Fire3")) //Csak akkor animálja az ugrást, ha fut közben
+            if (sprinting) //Csak akkor animálja az ugrást, ha fut közben
             {
                 _jumpStatus = JumpStatus.Up;
                 _animator.SetInteger(Jump, (int) _jumpStatus);

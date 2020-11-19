@@ -7,8 +7,8 @@ public class RocketScript : MonoBehaviour
 {
     private float _fired;
     private Rigidbody2D _rb;
-    private bool _goingRight;
     private byte _hitCount;
+    private Vector2 _forward;
 
     public byte maxHits = 3;
     
@@ -21,8 +21,8 @@ public class RocketScript : MonoBehaviour
     private void OnEnable()
     {
         _fired = Time.fixedTime;
-        _goingRight = transform.localScale.x > 0;
         _hitCount = 0;
+        _forward = transform.right;
     }
 
     // Update is called once per frame
@@ -35,7 +35,8 @@ public class RocketScript : MonoBehaviour
             _rb.velocity = Vector2.zero;
         }
 
-        _rb.AddForce(new Vector2(_goingRight ? 10 : -10, 0));
+        //_rb.AddForce(new Vector2(_goingRight ? 10 : -10, 0));
+        _rb.AddForce(10 * _forward);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
