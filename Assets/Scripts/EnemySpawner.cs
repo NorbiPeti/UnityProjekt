@@ -25,7 +25,6 @@ public class EnemySpawner : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //int timeMultiplier = _spawner.maxLevel - _spawner.Level;
         int countMultiplier = _spawner.Level + 1;
         if (Time.fixedTime - _lastSpawn > timeBetweenSpawns && _random.Next(2) == 1)
         {

@@ -23,11 +23,8 @@ public class WeaponFireController : MonoBehaviour
             var theRocket = _pool.GetObject();
             var rocketTransform = theRocket.transform;
             rocketTransform.position = firePoint.position;
-            /*var scale = rocketTransform.localScale;
-            if (transform.localScale.x * scale.x < 0)
-                scale.x *= -1;
-            rocketTransform.localScale = scale;*/
              
+            //https://forum.unity.com/threads/look-rotation-2d-equivalent.611044/
             // vector from this object towards the target location
             var vectorToTarget = Camera.main.ScreenToWorldPoint(Input.mousePosition) - rocketTransform.position;
             // rotate that vector by 90 degrees around the Z axis
@@ -38,10 +35,6 @@ public class WeaponFireController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, rotatedVectorToTarget);
             
             rocketTransform.rotation = targetRotation;
-            Debug.Log("Rotation: " + rocketTransform.rotation.eulerAngles);
-            /*Debug.Log("Rocket position: " + rocketTransform.position);
-            Debug.Log("Target position: " + Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            Debug.Log("Difference: " + direction);*/
             theRocket.SetActive(true);
         }
     }

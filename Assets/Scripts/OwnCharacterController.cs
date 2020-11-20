@@ -57,11 +57,8 @@ public class OwnCharacterController : CharacterControllerBase
         {
             //_rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             _rb.velocity += new Vector2(0, jumpForce);
-            if (sprinting) //Csak akkor animálja az ugrást, ha fut közben
-            {
-                _jumpStatus = JumpStatus.Up;
-                _animator.SetInteger(Jump, (int) _jumpStatus);
-            }
+            _jumpStatus = JumpStatus.Up;
+            _animator.SetInteger(Jump, (int) _jumpStatus);
         }
         else if (_jumpStatus == JumpStatus.Up && _rb.velocity.y <= 0)
         {

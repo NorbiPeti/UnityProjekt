@@ -47,7 +47,7 @@ public class EnemyController : CharacterControllerBase
 
         diff.Normalize();
         float sp = ((float) _random.NextDouble() / 2f + 1f) * speed; //1 és 1.5 közötti szorzó
-        _rb.AddForce(diff * (sp * _rb.mass * _rb.gravityScale));
+        _rb.AddForce(diff * sp);
         if (diff.x * transform.localScale.x < 0) //Ha másfelé néz, mint amerre megy
         {
             var scale = tr.localScale;

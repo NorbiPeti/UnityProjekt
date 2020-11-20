@@ -8,12 +8,11 @@ public class Parallaxing : MonoBehaviour
     private float _parallaxScale;
 	public float smoothing = 1f;
 
-	private Transform _cam;				// reference to the main cameras transform
-	private Vector3 _previousCamPos;	// the position of the camera in the previous frame
+	private Transform _cam;
+	private Vector3 _previousCamPos;
 
 	// Is called before Start(). Great for references.
 	void Awake () {
-		// set up the camera reference
 		_cam = Camera.main.transform;
 		_background = transform;
 	}
@@ -21,11 +20,8 @@ public class Parallaxing : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // The previous frame had the current frame's camera position
 		_previousCamPos = _cam.position;
-
-        // asigning coresponding parallaxScale
-        _parallaxScale = _background.position.z * -1;
+		_parallaxScale = _background.position.z * -1;
     }
 
     // Update is called once per frame
