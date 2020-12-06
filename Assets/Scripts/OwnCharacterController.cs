@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = System.Random;
 
@@ -83,6 +84,9 @@ public class OwnCharacterController : CharacterControllerBase
 
         _animator.SetFloat(Speed, Math.Abs(_rb.velocity.x));
         _animator.SetBool(Sprint, Input.GetButton("Fire3"));
+
+        if (Input.GetButtonDown("Cancel"))
+            SceneManager.LoadScene("Menu");
     }
 
     private void CheckpointReached()
