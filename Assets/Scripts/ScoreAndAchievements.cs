@@ -53,7 +53,7 @@ public class ScoreAndAchievements : MonoBehaviour
         else if (_level == 8)
             CheckAndDisplayAchievement("NextLevel", 2, "Level 8 completed");
         else if (_level == 10)
-            CheckAndDisplayAchievement("NextLevel", 3, "This is so next level");
+            CheckAndDisplayAchievement("NextLevel", 3, "10 levels completed");
     }
 
     private void CheckAndDisplayAchievement(string key, int value, string message)

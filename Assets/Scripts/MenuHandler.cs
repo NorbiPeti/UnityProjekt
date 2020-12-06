@@ -12,6 +12,6 @@ public class MenuHandler : MonoBehaviour
 
     public void Achievements()
     {
-        
+        SceneManager.LoadScene("Achievements");
     }
 }
