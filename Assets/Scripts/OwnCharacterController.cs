@@ -12,7 +12,7 @@ public class OwnCharacterController : CharacterControllerBase
     public float movementSpeed;
     public float sprintSpeed;
     public PlatformSpawner platformSpawner;
-    public ScoreSystem scoreSystem;
+    [FormerlySerializedAs("scoreSystem")] public ScoreAndAchievements scoreAndAchievements;
     public HUDManager hudManager;
     
     private Vector3 _spawnPos;
@@ -88,7 +88,8 @@ public class OwnCharacterController : CharacterControllerBase
     private void CheckpointReached()
     {
         _spawnPos = _checkpointPos;
-        scoreSystem.AddScore(100);
+        scoreAndAchievements.AddScore(100);
+        scoreAndAchievements.NextLevel();
     }
 
     public void Hit()
@@ -101,7 +102,7 @@ public class OwnCharacterController : CharacterControllerBase
 
     public void Respawn()
     {
-        scoreSystem.AddScore(-20);
+        scoreAndAchievements.AddScore(-20);
         transform.position = _spawnPos;
         _health = 100f;
         hudManager.UpdateHealth(_health);

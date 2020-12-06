@@ -65,7 +65,7 @@
      <Compile Include="Assets\Scripts\Parallaxing.cs" />
      <Compile Include="Assets\Scripts\PlatformSpawner.cs" />
      <Compile Include="Assets\Scripts\RocketScript.cs" />
-     <Compile Include="Assets\Scripts\ScoreSystem.cs" />
+     <Compile Include="Assets\Scripts\ScoreAndAchievements.cs" />
      <Compile Include="Assets\Scripts\Tiling.cs" />
      <Compile Include="Assets\Scripts\WeaponFireController.cs" />
  <Reference Include="UnityEngine">
