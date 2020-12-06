@@ -13,12 +13,15 @@ public class EnemyController : CharacterControllerBase
     private short _hitsToRemove;
     private readonly Random _random = new Random();
     private PlatformSpawner _platformSpawner;
+    private ScoreSystem _scoreSystem;
     
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _platformSpawner = GameObject.FindGameObjectWithTag("Game manager").GetComponent<PlatformSpawner>();
+        var gm = GameObject.FindGameObjectWithTag("Game manager");
+        _platformSpawner = gm.GetComponent<PlatformSpawner>();
+        _scoreSystem = gm.GetComponent<ScoreSystem>();
     }
 
     private void OnEnable()
@@ -61,6 +64,7 @@ public class EnemyController : CharacterControllerBase
         _rb.mass = 0.00001f;
         _rb.gravityScale = 0.01f;
         _rb.freezeRotation = false;
+        _scoreSystem.AddScore(1);
     }
 
     public bool IsAlive() => _rb.mass > 0.001f;

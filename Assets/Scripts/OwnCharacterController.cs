@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = System.Random;
 
 public class OwnCharacterController : CharacterControllerBase
@@ -11,6 +12,8 @@ public class OwnCharacterController : CharacterControllerBase
     public float movementSpeed;
     public float sprintSpeed;
     public PlatformSpawner platformSpawner;
+    public ScoreSystem scoreSystem;
+    public HUDManager hudManager;
     
     private Vector3 _spawnPos;
     private float _health = 100f;
@@ -73,7 +76,7 @@ public class OwnCharacterController : CharacterControllerBase
 
         if (_checkpointPos.x > 0 && (tr.position - _checkpointPos).magnitude < 2f)
         {
-            _spawnPos = _checkpointPos;
+            CheckpointReached();
             _checkpointPosList.RemoveAt(0);
             _checkpointPos = _checkpointPosList.Count > 0 ? _checkpointPosList[0] : Vector3.zero;
         }
@@ -82,17 +85,26 @@ public class OwnCharacterController : CharacterControllerBase
         _animator.SetBool(Sprint, Input.GetButton("Fire3"));
     }
 
+    private void CheckpointReached()
+    {
+        _spawnPos = _checkpointPos;
+        scoreSystem.AddScore(100);
+    }
+
     public void Hit()
     {
-        _health -= (float) _random.NextDouble() % 20f + 20f;
+        _health -= (float) _random.NextDouble() * 20f;
+        hudManager.UpdateHealth(_health);
         if (_health <= 0f)
             Respawn();
     }
 
     public void Respawn()
     {
+        scoreSystem.AddScore(-20);
         transform.position = _spawnPos;
         _health = 100f;
+        hudManager.UpdateHealth(_health);
         _rb.velocity = Vector2.zero;
     }
 

@@ -59,11 +59,13 @@
      <Compile Include="Assets\Scripts\CharacterControllerBase.cs" />
      <Compile Include="Assets\Scripts\EnemyController.cs" />
      <Compile Include="Assets\Scripts\EnemySpawner.cs" />
+     <Compile Include="Assets\Scripts\HUDManager.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\OwnCharacterController.cs" />
      <Compile Include="Assets\Scripts\Parallaxing.cs" />
      <Compile Include="Assets\Scripts\PlatformSpawner.cs" />
      <Compile Include="Assets\Scripts\RocketScript.cs" />
+     <Compile Include="Assets\Scripts\ScoreSystem.cs" />
      <Compile Include="Assets\Scripts\Tiling.cs" />
      <Compile Include="Assets\Scripts\WeaponFireController.cs" />
  <Reference Include="UnityEngine">
