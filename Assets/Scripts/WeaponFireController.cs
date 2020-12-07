@@ -8,11 +8,13 @@ public class WeaponFireController : MonoBehaviour
     public GameObject prefab;
     public Transform firePoint;
     private ObjectPool _pool;
+    private ParticleSystem _particle;
     
     // Start is called before the first frame update
     void Start()
     {
         _pool = new ObjectPool(prefab, 10);
+        _particle = firePoint.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -37,5 +39,10 @@ public class WeaponFireController : MonoBehaviour
             rocketTransform.rotation = targetRotation;
             theRocket.SetActive(true);
         }
+
+        if (Input.GetButtonDown("Fire2"))
+            _particle.Play();
+        else if (Input.GetButtonUp("Fire2"))
+            _particle.Stop();
     }
 }

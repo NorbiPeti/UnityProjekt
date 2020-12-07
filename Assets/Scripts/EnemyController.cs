@@ -48,6 +48,8 @@ public class EnemyController : CharacterControllerBase
         if (diff.y > 5 || diff.x > 20)
             Remove();
 
+        if (diff.y > 1)
+            _rb.AddForce(new Vector2(0, 10f));
         diff.Normalize();
         float sp = ((float) _random.NextDouble() / 2f + 1f) * speed; //1 és 1.5 közötti szorzó
         _rb.AddForce(diff * sp);
@@ -98,5 +100,11 @@ public class EnemyController : CharacterControllerBase
     {
         _rb.velocity = Vector2.zero;
         gameObject.SetActive(false);
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        if (IsAlive() && _random.Next(5) == 0)
+            Die();
     }
 }
