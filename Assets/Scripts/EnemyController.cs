@@ -49,11 +49,11 @@ public class EnemyController : CharacterControllerBase
         if (diff.y > 5 || diff.x > 20)
             Remove();
 
-        if (diff.y > 1)
-            _rb.AddForce(new Vector2(0, 10f));
+        /*if (diff.y > 1)
+            _rb.AddForce(new Vector2(0, 10f));*/
         diff.Normalize();
-        float sp = ((float) _random.NextDouble() / 2f + 1f) * speed; //1 és 1.5 közötti szorzó
-        _rb.AddForce(diff * sp);
+        /*float sp = ((float) _random.NextDouble() / 2f + 1f) * speed; //1 és 1.5 közötti szorzó
+        _rb.AddForce(diff * sp);*/
         if (diff.x * transform.localScale.x < 0) //Ha másfelé néz, mint amerre megy
         {
             var scale = tr.localScale;
