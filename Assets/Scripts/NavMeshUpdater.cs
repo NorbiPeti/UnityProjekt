@@ -20,7 +20,7 @@ public class NavMeshUpdater : MonoBehaviour
 
     private void Update()
     {
-        if (Mathf.Abs(player.position.x - _gg.center.x) > _gg.width / 4f)
+        if (Mathf.Abs(player.position.x - _gg.center.x) > _gg.width * _gg.nodeSize / 4f)
         {
             var pos = _gg.center;
             pos.x = player.position.x;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,6 +52,11 @@ public class EnemyAI : MonoBehaviour
         // Start a new path to the target position, return the result to the OnPathComplete method
         _seeker.StartPath(transform.position, _target.position, OnPathComplete);
 
+        //StartCoroutine(UpdatePath());
+    }
+
+    private void OnEnable()
+    {
         StartCoroutine(UpdatePath());
     }
 
@@ -99,15 +105,12 @@ public class EnemyAI : MonoBehaviour
         Vector3 dir = (_path.vectorPath[_currentWaypoint] - transform.position).normalized;
         dir *= speed * Time.fixedDeltaTime;
 
-        //if(Vector3.Distance (transform.position, _target.position) < 10)
-        //{
+        float diff = Vector3.Distance(transform.position, _target.position);
         //Move the AI
-        //_rb.AddForce(dir, fMode);
-        _rb.velocity = dir;
-        //}
+        _rb.AddForce(dir * 10 / diff, fMode);
 
         if (_path.vectorPath[_currentWaypoint].y - transform.position.y > 1)
-            _rb.AddForce(new Vector2(0, 10f));
+            _rb.AddForce(new Vector2(0, 20f));
 
         float dist = Vector3.Distance(transform.position, _path.vectorPath[_currentWaypoint]);
         if (dist < nextWaypointDistance)
