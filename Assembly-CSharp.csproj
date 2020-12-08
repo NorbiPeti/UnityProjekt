@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\HUDManager.cs" />
      <Compile Include="Assets\Scripts\MenuEnemySpawner.cs" />
      <Compile Include="Assets\Scripts\MenuHandler.cs" />
+     <Compile Include="Assets\Scripts\NavMeshUpdater.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\OwnCharacterController.cs" />
      <Compile Include="Assets\Scripts\Parallaxing.cs" />
@@ -250,6 +251,9 @@
  </Reference>
  <Reference Include="UnityEditor">
  <HintPath>/D/Unity/2019.4.13f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="Pathfinding.Ionic.Zip.Reduced">
+ <HintPath>/D/Unity/Projects/Projekt/Assets/AstarPathfindingProject/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>/D/Unity/2019.4.13f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -682,6 +686,18 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="AstarPathfindingProject.csproj">
+      <Project>{5CCEE858-6C72-CBFD-AB4D-C14A74568B2C}</Project>
+      <Name>AstarPathfindingProject</Name>
+    </ProjectReference>
+    <ProjectReference Include="PackageToolsEditor.csproj">
+      <Project>{F32E2685-1CA3-72C0-A278-83F3E677A98E}</Project>
+      <Name>PackageToolsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="AstarPathfindingProjectEditor.csproj">
+      <Project>{D490F06A-6B5E-2FC6-4BC7-5DE43DB4B967}</Project>
+      <Name>AstarPathfindingProjectEditor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
