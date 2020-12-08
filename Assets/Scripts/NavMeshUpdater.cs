@@ -26,7 +26,6 @@ public class NavMeshUpdater : MonoBehaviour
             pos.x = player.position.x;
             _gg.center = pos;
             _gg.Scan();
-            //StartCoroutine((IEnumerator) _pathfinding.ScanAsync());
         }
     }
 }

@@ -35,7 +35,6 @@ public class RocketScript : MonoBehaviour
             _rb.velocity = Vector2.zero;
         }
 
-        //_rb.AddForce(new Vector2(_goingRight ? 10 : -10, 0));
         _rb.AddForce(10 * _forward);
     }
 

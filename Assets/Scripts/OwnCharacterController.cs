@@ -13,7 +13,7 @@ public class OwnCharacterController : CharacterControllerBase
     public float movementSpeed;
     public float sprintSpeed;
     public PlatformSpawner platformSpawner;
-    [FormerlySerializedAs("scoreSystem")] public ScoreAndAchievements scoreAndAchievements;
+    public ScoreAndAchievements scoreAndAchievements;
     public HUDManager hudManager;
     
     private Vector3 _spawnPos;
@@ -59,7 +59,6 @@ public class OwnCharacterController : CharacterControllerBase
 
         if (Input.GetButtonDown("Jump") && IsOnGround())
         {
-            //_rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             _rb.velocity += new Vector2(0, jumpForce);
             _jumpStatus = JumpStatus.Up;
             _animator.SetInteger(Jump, (int) _jumpStatus);
